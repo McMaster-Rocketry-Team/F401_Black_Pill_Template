@@ -1,0 +1,6 @@
+# This file was automatically generated.
+
+[toolchain]
+channel = "nightly-2024-11-30"
+components = ["rust-src", "rustfmt"]
+targets = ["thumbv7em-none-eabihf"]
