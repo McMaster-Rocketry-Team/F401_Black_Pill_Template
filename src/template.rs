@@ -18,7 +18,7 @@ async fn main(spawner: Spawner) {
     info!("Hello world");
 
     // button labeled "key"
-    // pressed down -> high; released -> low
+    // pressed down -> low; released -> high
     let mut button = ExtiInput::new(p.PA0, p.EXTI0, Pull::Up);
 
     // blue led

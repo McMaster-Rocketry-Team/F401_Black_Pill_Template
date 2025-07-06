@@ -18,7 +18,7 @@ async fn main(spawner: Spawner) {
     info!("Hello world");
 
     // button labeled "key"
-    // pressed down -> high; released -> low
+    // pressed down -> low; released -> high
     let mut button = ExtiInput::new(p.PA0, p.EXTI0, Pull::Up);
     
     // blue led
@@ -26,18 +26,18 @@ async fn main(spawner: Spawner) {
     let mut led = Output::new(p.PC13, Level::High, Speed::Low);
 
     loop {
-        button.wait_for_high().await;
+        button.wait_for_high().await; // wait for button to be released
 
         let blink_led_fut = blink_led(&mut led);
-        let wait_button_pressed_fut = button.wait_for_low();
+        let wait_button_pressed_fut = button.wait_for_low(); // wait for the button to be pressed
 
         select(blink_led_fut, wait_button_pressed_fut).await;
-        led.set_high();
+        led.set_high(); // turns off led
     }
 }
 
 async fn blink_led<'a>(led: &mut Output<'a>) {
-    led.set_low();
+    led.set_low(); // turns on led
     loop {
         Timer::after_millis(1000).await;
         led.toggle();
